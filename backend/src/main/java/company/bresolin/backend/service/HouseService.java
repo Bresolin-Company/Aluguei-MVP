@@ -5,6 +5,7 @@ import company.bresolin.backend.entities.User;
 import company.bresolin.backend.entities.dto.HouseCreateDTO;
 import company.bresolin.backend.repository.HouseRepository;
 import company.bresolin.backend.repository.UserRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -21,16 +22,16 @@ public class HouseService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<?> createHouse(HouseCreateDTO house, Authentication authentication) {
+    public ResponseEntity<?> createHouse(House house, Authentication authentication) {
         try {
             Optional<User> owner = userRepository.findByCpf(authentication.getName());
 
-            House house1 = new House();
-            house1.setOwner(owner.get());
-            house1.setName(house.name());
+            house.setOwner(owner.orElseThrow(
+                    () -> new BadRequestException("User not found")
+            ));
 
-            houseRepository.save(house1);
-            return ResponseEntity.ok().body(house1);
+            houseRepository.save(house);
+            return ResponseEntity.ok().body(house);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error creating house");
         }

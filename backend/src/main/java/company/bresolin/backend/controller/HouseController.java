@@ -1,5 +1,6 @@
 package company.bresolin.backend.controller;
 
+import company.bresolin.backend.entities.House;
 import company.bresolin.backend.entities.dto.HouseCreateDTO;
 import company.bresolin.backend.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class HouseController {
 
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @PostMapping
-    public ResponseEntity<?> createHouse(@RequestBody HouseCreateDTO house, Authentication authentication) {
-        if (house == null || house.name() == null || house.name().isBlank()){
+    public ResponseEntity<?> createHouse(@RequestBody House house, Authentication authentication) {
+        if (house == null || house.getName() == null || house.getName().isBlank()){
             return ResponseEntity.badRequest().body("House cannot be null");
         }
 

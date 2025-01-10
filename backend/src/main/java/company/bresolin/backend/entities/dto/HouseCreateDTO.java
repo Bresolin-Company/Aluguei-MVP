@@ -1,4 +1,6 @@
 package company.bresolin.backend.entities.dto;
 
-public record HouseCreateDTO(String name) {
+import company.bresolin.backend.entities.House;
+
+public record HouseCreateDTO(House name) {
 }
