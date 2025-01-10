@@ -10,6 +10,9 @@ public class House {
     private Long idHouse;
     private String name;
     private String description;
+    private Integer rooms;
+    private Integer bathrooms;
+    private Double area;
     private Double price;
     private Double tax;
     @OneToOne
@@ -17,4 +20,16 @@ public class House {
     @ManyToOne
     private User user;
 
+    public Long setOwner(User user) {
+        this.user = user;
+        return this.idHouse;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
